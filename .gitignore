@@ -1,0 +1,9 @@
+.Rproj
+.Rproj.user
+.Rhistory
+.Data
+.Ruserdata
+.DS_Store
+data
+image
+00_data_preview.R
