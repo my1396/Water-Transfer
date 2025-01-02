@@ -28,6 +28,8 @@ Fix: try to apply class.weights, adjust threshold, etc.
 
 ___
 
+## Performance Evaluation
+
 ### Eastern
 
 | group   | accuracy | recall | precision | F1   |
@@ -93,14 +95,14 @@ ___
 <table><tbody>
   <tr>
     <td>Eastern</td>
-    <td><span style='color:red'>Near surface wind speed</span></td>
+    <td>Near surface wind speed</td>
     <td>近地表风速</td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>PDSI</td>
-    <td>Palmer drought severity index</td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
@@ -111,14 +113,14 @@ ___
   </tr>
   <tr>
     <td></td>
-    <td><span style='color:red'>SPEI-12</span></td>
-    <td>standardized precipitation evapotranspiration index, monthly</td>
+    <td>SPEI-12</td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
     <td></td>
-    <td><span style='color:red'>SC-PDSI</span></td>
-    <td>self-calibrating Palmer drought severity index</td>
+    <td>SC-PDSI</td>
+    <td></td>
     <td></td>
   </tr>
   <tr>
@@ -141,13 +143,3 @@ ___
   </tr>
 </tbody>
 </table>
-
-Note: 
-
-- red color denotes important for both lines.
-- economic variables, land use,  night light, and population, are of little importance.
-
-
-
-
-
