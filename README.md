@@ -144,6 +144,5 @@ ___
 </tbody>
 </table>
 
-- 红色变量：对 Eastern 和 Central 都重要。
-- 重要的变量：PDSI 干旱指数，water stress, 地下径流，风速，降雪，heat flux
+- 重要的变量：干旱指数 (PDSI , SC_PDSI, SPEI)，water stress, 地下径流，风速，降雪，heat flux
 - 经济变量都不重要：land use, night light, 排名末位，population 中后段。
