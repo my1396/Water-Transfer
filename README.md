@@ -95,14 +95,14 @@ ___
 <table><tbody>
   <tr>
     <td>Eastern</td>
-    <td>Near surface wind speed</td>
+    <td><span style='color:red'>Near surface wind speed</span></td>
     <td>近地表风速</td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td>PDSI</td>
-    <td></td>
+    <td>Palmer drought severity index</td>
     <td></td>
   </tr>
   <tr>
@@ -113,14 +113,14 @@ ___
   </tr>
   <tr>
     <td></td>
-    <td>SPEI-12</td>
-    <td></td>
+    <td><span style='color:red'>SPEI-12</span></td>
+    <td>standardized precipitation evapotranspiration index, monthly</td>
     <td></td>
   </tr>
   <tr>
     <td></td>
-    <td>SC-PDSI</td>
-    <td></td>
+    <td><span style='color:red'>SC-PDSI</span></td>
+    <td>self-calibrating Palmer drought severity index</td>
     <td></td>
   </tr>
   <tr>
@@ -143,3 +143,7 @@ ___
   </tr>
 </tbody>
 </table>
+
+- 红色变量：对 Eastern 和 Central 都重要。
+- 重要的变量：PDSI 干旱指数，water stress, 地下径流，风速，降雪，heat flux
+- 经济变量都不重要：land use, night light, 排名末位，population 中后段。
