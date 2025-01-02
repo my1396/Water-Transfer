@@ -6,4 +6,6 @@
 .DS_Store
 data
 image
+output
+performance
 00_data_preview.R
