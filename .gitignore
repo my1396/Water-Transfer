@@ -4,8 +4,9 @@
 .RData
 .Ruserdata
 .DS_Store
-data
-image
-output
-performance
+/data
+/image
+/ouput
+/performance
 00_data_preview.R
+
