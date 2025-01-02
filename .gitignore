@@ -1,12 +1,19 @@
+# auto generated system files
 *.Rproj
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 .DS_Store
+~*
+
+# data files
 /data
 /image
 /ouput
 /performance
+
+# irrelevant scripts
 00_data_preview.R
+
 
