@@ -1,14 +1,35 @@
 # Water Transfer
 
-To-do list:
+## To-do list
 
-- [ ] check performance measures' baseline in classcification literature
-- [x] merge eastern and central line; train model using data before 2014 [MY]
-- [x] run eastern and central separately [MY]
-  - [x] Eastern before and including 2012
-  - [x] Central before and including 2014
+- [ ] Check performance measures' baseline in classcification literature
+
+**Improve model performance**
+
+Current issue: low recall
+
+- [ ] Deal with data imbalance: create 1-1 water receive or not
+- [ ] Correlation among variables. Dimension reduction by PCA?
+- [ ] Remove aridity measures, PDSI, SPEI-12, SC-PDSI, and see how **variable importance** changes
+
+**Other ML models**
+
+- [ ] Gradient Boost
+- [ ] Neural Network
+
+**Questions to confirm**
+
+- [ ] Whether can merge Easter and Central line
+
+**Steps for later**
+
+- [ ] Use historically trained model to predict future, e.g., 2020, or 3-year average.
 
 
+
+
+
+___
 
 Issue: False Negative is high due to inbalanced data. Easter: 85% False and 15% True; higher imbalance in Central line (91% False); 
 
@@ -19,8 +40,8 @@ Fix: try to apply class.weights, adjust threshold, etc.
 | Location | Number of points              |
 | -------- | ----------------------------- |
 | Eastern  | 3723 (580 water receive, 15%) |
-| Central  | 3893 (338, 9%)                |
-| All      | 7616 (918, 12%)               |
+| Central  | 3893 (338 water receive, 9%)  |
+| All      | 7616 (918 water receive, 12%) |
 
 
 

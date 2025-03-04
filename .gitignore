@@ -10,10 +10,11 @@
 # data files
 /data
 /image
-/ouput
+/output
 /performance
 
 # irrelevant scripts
 00_data_preview.R
+RandomForest_modelEvaluation.R
 
 
