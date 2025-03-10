@@ -131,7 +131,7 @@ for (i in 1:10){
                         probability = T,
                         importance = "permutation", 
                         scale.permutation.importance = TRUE,
-    )
+                        )
     # print(RF_ranger)
     
     rf.pred.test <- predict(RF_ranger, data=data_before[-idx,])$predictions
@@ -248,7 +248,7 @@ f_name <- "performance/varImp_name.csv"
 
 
 ## ========================================================================== ##
-## Visualize Confusion Matrix---------------------------------------------------
+## Visualize Confusion Matrix --------------------------------------------------
 # load confusion table
 f_name <- sprintf("output/confusion_table_%s.csv", area)
 confusion_ftable <- read.table(f_name, sep=",", skip = 2)
