@@ -3,6 +3,15 @@
 ## To-do list
 
 - [ ] Check performance measures' baseline in classcification literature
+- [ ] Remove night light, see if performance drops
+  - [ ] data quality issue for night light
+
+- [ ] Use historically trained model to predict future
+  - [ ] 0-1 prediction: 3-year average, massive vote.
+  - [ ] Maybe by year, so we can see whether there is a trend of increasing deviation.
+
+
+
 
 **Improve model performance**
 
@@ -12,21 +21,28 @@ Current issue: low recall
 
   2025-03-12
 
-  Average performance (average of 10-fold CV) before and after stratified sampling:
+  Time period: 2010-2020 (all)
 
-  |                | accuracy | recall | precision | F1   |
-  | -------------- | -------- | ------ | --------- | ---- |
-  | Eastern before | 0.93     | 0.64   | 0.86      | 0.73 |
-  | Eastern after  | 0.93     | 0.85   | 0.74      | 0.79 |
-  | Central before | 0.91     | 0.48   | 0.65      | 0.55 |
-  | Central after  | 0.90     | 0.76   | 0.57      | 0.65 |
-  | All before     | 0.91     | 0.52   | 0.78      | 0.62 |
-  | All after      | 0.92     | 0.79   | 0.66      | 0.72 |
+  - Eastern: 2010-**2013** (inclusive), 2012 as of now.
+  - Central: 2010-2014 (inclusive)
+
+  Average performance (average of 10-fold CV) before and after stratified sampling (V1 for before, V2 for after):
+
+  |            | accuracy | recall | precision | F1   |
+  | ---------- | -------- | ------ | --------- | ---- |
+  | Eastern V1 | 0.93     | 0.64   | 0.86      | 0.73 |
+  | Eastern V2 | 0.93     | 0.85   | 0.74      | 0.79 |
+  | Central V1 | 0.91     | 0.48   | 0.65      | 0.55 |
+  | Central V2 | 0.90     | 0.76   | 0.57      | 0.65 |
+  | All V1     | 0.91     | 0.52   | 0.78      | 0.62 |
+  | All V2     | 0.92     | 0.79   | 0.66      | 0.72 |
+
+  General standard: accuracy > 0.8, the other three > 0.7.
 
   **Comment**: improved recall but at the cost of precision, but overall speaking, the F1 score is improved. 
 
   $$F1 = \frac{2\times \text{precision}\times \text{recall}}{\text{precision}+\text{recall}}$$
-  
+
 
   <img src="https://drive.google.com/thumbnail?id=18fKUj-dZ7ZLhxPAegyud4Smxqsij8Ahj&sz=w1000" alt="Confusion matrix" style="display: block; margin-right: auto; margin-left: auto; zoom:1-0%;" />
 
@@ -39,15 +55,12 @@ Current issue: low recall
 **Other ML models**
 
 - [ ] Gradient Boost
+- [ ] Support Vector Machine
 - [ ] Neural Network
 
 **Questions to confirm**
 
 - [ ] Whether can merge Easter and Central line
-
-**Steps for later**
-
-- [ ] Use historically trained model to predict future, e.g., 2020, or 3-year average.
 
 
 
