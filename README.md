@@ -36,7 +36,6 @@ Current issue: low recall
 
   - [ ] Remove aridity measures, PDSI, SPEI-12, SC-PDSI, and see how **variable importance** changes
 
-
 **Other ML models**
 
 - [ ] Gradient Boost
@@ -94,7 +93,7 @@ ___
 | G10     | 0.92     | 0.61   | 0.88      | 0.72 |
 | Average | 0.93     | 0.64   | 0.86      | 0.73 |
 
-2025-03-12 V2: rebalance class
+2025-03-12 V2: rebalance classes
 
 | group   | accuracy | recall | precision | F1   |
 | ------- | -------- | ------ | --------- | ---- |
