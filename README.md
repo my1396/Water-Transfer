@@ -23,9 +23,7 @@ Current issue: low recall
   | All before     | 0.91     | 0.52   | 0.78      | 0.62 |
   | All after      | 0.92     | 0.79   | 0.66      | 0.72 |
 
-  **Comment**: improved recall but at the cost of precision, but overall speaking, the F1 score is improved.
-
-  
+  **Comment**: improved recall but at the cost of precision, but overall speaking, the F1 score is improved. \
   $$
   F1 = \frac{2\times \text{precision}\times \text{recall}}{\text{precision}+\text{recall}}
   $$
