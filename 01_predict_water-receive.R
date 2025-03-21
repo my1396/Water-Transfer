@@ -1,8 +1,8 @@
 # Predict water receive
-# 东线是12年通水的； 中线是Dec.2014底通水
+# 东线是13年通水的； 中线是Dec.2014底通水
 # 总的话，可以2014作为之前之后的分界。
 # 分东中的话，
-#   - before: 东线是 ≤ 2012年，
+#   - before: 东线是 ≤ 2013年，
 #   - before: 中线是 ≤ 2014年。
 
 # Random Forest baseline model
@@ -67,11 +67,12 @@ groups[[1]] %>%
 
 long_name <- colnames(data)[c(-1:-3, -ncol(data))]
 long_name
-short_name <- c("sensible_heat_flux", "humidity", "radiation", "snow_depth", "rad_temp", "soil_temp_40",
-  "snow_equiv", "snowfall", "precip", "subsurface_runoff", "soil_moisture", "water_stress",
-  "land_use", "spei", "population", "sc_pdsi", "air_temp", "evapo", 
-  "soil_temp_10", "net_radiation", "pdsi", "latent_heat_flux", "wind_speed", "soild_heat_flux",
-  "surface_runoff", "soil_moisture_10", "snow_cover", "night_light")
+short_name <- c("sensible_heat_flux", "humidity", "radiation", "snow_depth", "rad_temp",
+                "soil_temp_40", "snow_equiv", "snowfall", "precip", "subsurface_runoff",
+                "soil_moisture", "water_stress", "land_use", "spei", "population", 
+                "sc_pdsi", "air_temp", "evapo",  "soil_temp_10", "net_radiation", 
+                "pdsi", "latent_heat_flux", "wind_speed", "soild_heat_flux",  "surface_runoff",
+                "soil_moisture_10", "snow_cover", "night_light")
 variable_name <- cbind(long_name, short_name) %>% data.frame()
 variable_name
 
@@ -79,7 +80,7 @@ colnames(data)[c(-1:-3, -ncol(data))] <- short_name
 colnames(data)
 
 # data_before <- data %>% filter(year <= 2014) # all and central
-data_before <- data %>% filter(year <= 2012) # eastern
+data_before <- data %>% filter(year <= 2013) # eastern
 data_before %>% 
     select(year, lat, lon, Water_receive, everything()) %>% 
     view()

@@ -3,10 +3,17 @@
 ## To-do list
 
 - [ ] Check performance measures' baseline in classcification literature
-- [ ] Remove night light, see if performance drops
-  - [ ] data quality issue for night light
-
-- [ ] Use historically trained model to predict future
+- [x] Remove night light, see if performance drops
+  
+  There might be data quality issue for night light.
+  
+  Conclusion: 
+  
+  - Model performance drop by .01 for the Central line, and the difference is negligible for the Eastern line and the two combined together. 
+  
+  - Night light does not affect the performance significantly.
+  
+- [ ] Use historically trained model (before operation) to predict future (after operation)
   - [ ] 0-1 prediction: 3-year average, massive vote.
   - [ ] Maybe by year, so we can see whether there is a trend of increasing deviation.
 
@@ -15,19 +22,23 @@
 
 **Improve model performance**
 
-Current issue: low recall
+Main Issue: low recall, about 0.5x
 
-- [ ] Deal with data imbalance: create 1-1 water receive or not
+Current Status: improved recall, to about 0.8, at the cost of lower precision, about 0.7.
 
-  2025-03-12
+- [ ] Deal with data imbalance: 
+
+  Fix: assign class weights, 0-1 water receive or not, to generate balanced training samples.
 
   Time period: 2010-2020 (all)
 
   - Eastern: 2010-**2013** (inclusive), 2012 as of now.
   - Central: 2010-2014 (inclusive)
 
-  Average performance (average of 10-fold CV) before and after stratified sampling (V1 for before, V2 for after):
+  2025-03-12
 
+  Average performance (average of 10-fold CV) before and after stratified sampling (V1 for before, V2 for after):
+  
   |            | accuracy | recall | precision | F1   |
   | ---------- | -------- | ------ | --------- | ---- |
   | Eastern V1 | 0.93     | 0.64   | 0.86      | 0.73 |
@@ -37,12 +48,19 @@ Current issue: low recall
   | All V1     | 0.91     | 0.52   | 0.78      | 0.62 |
   | All V2     | 0.92     | 0.79   | 0.66      | 0.72 |
 
+  2025-03-19
+
+  After changing the operational year from 2012 to 2013 for Eastern line, performance improves a bit, of a scale .01.
+
+  |            | accuracy | recall | precision | F1   |
+  | ---------- | -------- | ------ | --------- | ---- |
+  | Eastern V3 | 0.93     | 0.85   | 0.75      | 0.80 |
+  
   General standard: accuracy > 0.8, the other three > 0.7.
 
   **Comment**: improved recall but at the cost of precision, but overall speaking, the F1 score is improved. 
-
+  
   $$F1 = \frac{2\times \text{precision}\times \text{recall}}{\text{precision}+\text{recall}}$$
-
 
   <img src="https://drive.google.com/thumbnail?id=18fKUj-dZ7ZLhxPAegyud4Smxqsij8Ahj&sz=w1000" alt="Confusion matrix" style="display: block; margin-right: auto; margin-left: auto; zoom:1-0%;" />
 
@@ -126,6 +144,8 @@ ___
 
 ### Central
 
+2025-01 V1
+
 | group   | accuracy | recall | precision | F1   |
 | ------- | -------- | ------ | --------- | ---- |
 | G1      | 0.90     | 0.40   | 0.65      | 0.50 |
@@ -159,6 +179,8 @@ ___
 ___
 
 ### All
+
+2025-01 V1
 
 | group   | accuracy | recall | precision | F1   |
 | ------- | -------- | ------ | --------- | ---- |
@@ -237,8 +259,6 @@ ___
   </tr>
 </tbody>
 </table>
-
-
 - 重要的变量：干旱指数 (PDSI , SC_PDSI, SPEI)，water stress, 地下径流，风速，降雪，heat flux
 - 经济变量都不重要：land use, night light, 排名末位，population 中后段。
 

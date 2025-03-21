@@ -1,5 +1,7 @@
 # Loop through all groups, run RF with re-balanced classes.
 # Continue with 01_predict_water-receive.R
+# Corrected year in which water transfer is operational:
+#   Eastern: 2012 --> 2013
 
 ## Load data -------------------------------------------------------------------
 area <- "all"
@@ -25,7 +27,7 @@ colnames(data)[c(-1:-3, -ncol(data))] <- short_name
 colnames(data)
 
 data_before <- data %>% filter(year <= 2014) # all and central
-# data_before <- data %>% filter(year <= 2012) # eastern
+# data_before <- data %>% filter(year <= 2013) # eastern
 
 ## Check Water_receive 0-1 distribution
 data_before %>% 
@@ -38,6 +40,16 @@ set.seed(123)
 kfolds <- kfoldSplit(1:nrow(data_before), k = 10, train = TRUE)
 ## ========================================================================== ##
 ## RF prediction ---------------------------------------------------------------
+# using the whole set of predictors
+formula <- as.formula(
+    paste("Water_receive", 
+          paste(short_name, collapse = " + "), 
+          sep = " ~ "))
+# remove night light from the predictors
+formula <- as.formula(
+    paste("Water_receive", 
+          paste(short_name %>% head(-1), collapse = " + "), 
+          sep = " ~ "))
 # Initialize model output containers
 prediction_df <- matrix(nrow=0, ncol=7)
 confusion_matrix_all <- array(numeric(), dim = c(2,2,0))
@@ -56,6 +68,7 @@ for (i in 1:10){
     w <- w/(sum(w))
     weights[data_before[idx, "Water_receive", drop=TRUE] %>% as.logical()] <- w[2]
     weights[!data_before[idx, "Water_receive", drop=TRUE]] <- w[1]
+    cat ("Scaled weights:")
     print (weights %>% table())
     
     ## Run RF
@@ -129,26 +142,26 @@ for (i in 1:10){
 } # End 10-fold CV
 
 prediction_df
-f_name <- sprintf("output/prediction_%s_rebalance.csv", area)
+f_name <- sprintf("output/prediction_%s_rebalance_no-NL.csv", area)
 f_name
 write_csv(prediction_df, f_name)
 
 confusion_matrix_all
 confusion_ftable <- ftable(confusion_matrix_all)
 cont <- confusion_ftable %>% format(method="col.compact", quote = FALSE)
-f_name <- sprintf("output/confusion_table_%s_rebalance.csv", area)
+f_name <- sprintf("output/confusion_table_%s_rebalance_no-NL.csv", area)
 f_name
 write.table(cont, sep = ",", file = f_name,
             row.names = FALSE, col.names = FALSE)
 
 rownames(performance_df) <- paste0("G", 1:10)
 performance_df <- performance_df %>% as_tibble(rownames="Group")
-f_name <- sprintf("performance/performance_df_%s_rebalance.csv", area)
+f_name <- sprintf("performance/performance_df_%s_rebalance_no-NL.csv", area)
 f_name
 write_csv(as.data.frame(performance_df), f_name)
 
 colnames(varImp_df)[-1] <- paste0("G", 1:10)
-f_name <- sprintf("performance/varImp_df_%s_rebalance.csv", area)
+f_name <- sprintf("performance/varImp_df_%s_rebalance_no-NL.csv", area)
 f_name
 write_csv(varImp_df, f_name)
 
