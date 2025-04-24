@@ -67,12 +67,14 @@ groups[[1]] %>%
 
 long_name <- colnames(data)[c(-1:-3, -ncol(data))]
 long_name
-short_name <- c("sensible_heat_flux", "humidity", "radiation", "snow_depth", "rad_temp",
-                "soil_temp_40", "snow_equiv", "snowfall", "precip", "subsurface_runoff",
-                "soil_moisture", "water_stress", "land_use", "spei", "population", 
-                "sc_pdsi", "air_temp", "evapo",  "soil_temp_10", "net_radiation", 
-                "pdsi", "latent_heat_flux", "wind_speed", "soild_heat_flux",  "surface_runoff",
-                "soil_moisture_10", "snow_cover", "night_light")
+short_name <- c("sensible_heat_flux", "humidity", "radiation", "snow_depth", 
+                "rad_temp", "soil_temp_40", "snow_equiv", "snowfall", "precip",
+                "subsurface_runoff", "soil_moisture", "water_stress", 
+                "land_use", "spei", "population", "sc_pdsi", "air_temp", 
+                "evapo",  "soil_temp_10", "net_radiation", "pdsi",
+                "latent_heat_flux", "wind_speed", "soild_heat_flux", 
+                "surface_runoff", "soil_moisture_10", "snow_cover", "night_light"
+                )
 variable_name <- cbind(long_name, short_name) %>% data.frame()
 variable_name
 
@@ -255,7 +257,7 @@ f_name <- sprintf("output/confusion_table_%s.csv", area)
 confusion_ftable <- read.table(f_name, sep=",", skip = 2)
 confusion_ftable <- array(confusion_ftable[,3:12] %>% unlist(), 
                           dim = c(2,2,10) ) %>% 
-    aperm(perm=c(2,1,3))
+                    aperm(perm=c(2,1,3))
 dimnames(confusion_ftable) <- list(rf.class.test = c(0, 1),
                                    obs.test = c(0,1),
                                    Group = paste0("G",1:10))
