@@ -2,7 +2,7 @@
 
 ## To-do list
 
-- [ ] Check performance measures' baseline in classcification literature
+- [ ] Check performance measures' baseline in classification literature
 - [x] Remove night light, see if performance drops
   
   There might be data quality issue for night light.
@@ -17,7 +17,7 @@
   - [ ] Visualize prediction after operation and see if there is a changing pattern from 0 to 1 or from 1 to 0;
   - [ ] 0-1 prediction: 
     - [ ] 3-year average climate; which lower the influence of climate internal volatility;
-    - [ ] massive vote; predict 1 if there exists 1: Predictions turn out to be too concervative.
+    - [ ] massive vote; predict 1 if there exists 1: Predictions turn out to be too conservative.
   - [ ] Add predictors, such as volatility
 
 
@@ -28,11 +28,11 @@ ___
 
 2025-04-24
 
-**Notes about night light**: Performance maintains afteral the removing NL. See [Performance_no_NightLight.xlsx](https://github.com/my1396/Water-Transfer/blob/d2967122217802eb69ae7e14d91a39959247efc1/Performance_no_NightLight.xlsx) for detailed performance.
+**Notes about night light**: Performance maintains after removing NL. See [Performance_no_NightLight.xlsx](https://github.com/my1396/Water-Transfer/blob/d2967122217802eb69ae7e14d91a39959247efc1/Performance_no_NightLight.xlsx) for detailed performance.
 
-**The main update** is dividing data into periods before and after the water transfer operation. Using data before as trainning data, and predicting water receive for data after.
+**The main update** is dividing data into periods before and after the water transfer operation. Using data before as training data, and predicting water receive for data after.
 
-**Main conclusion**: Model performance drops when we divide by time, which indicates the realationship varies across time. (i.e., the model trained on historical data may not be suitable for predicting future values.) I tried to boost performance by detrending the climate variables and improving probability threshold of predicting `water receive = 0`.  
+**Main conclusion**: Model performance drops when we divide by time, which indicates the relationship varies across time. (i.e., the model trained on historical data may not be suitable for predicting future values.) I tried to boost performance by detrending the climate variables and improving probability threshold of predicting `water receive = 0`.  
 
 The performance I achieve is as follows:
 
@@ -144,13 +144,16 @@ ___
 <img src="https://drive.google.com/thumbnail?id=1P3IM12VRrIwLHRvuPv1KJSD7e1z3ioOY&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
 <figcaption> Climate variables before detrending.</figcaption>
 </figure>
+
 The ideal scenario is there are distinct distribution for water receive or not, no overlapping and low volatility. But we see there are overlaps between the lower quartiles and the upper quartiles of the distributions. And the climate variables fluctuates.
 
-To make the patterns more distinguishable, I detrended the climate variables. Subtract each year's cross section mean. After centralizing, each year's climate becomes more comprable across time. This is essential as we use historical data to predict future.
+To make the patterns more distinguishable, I detrended the climate variables. Subtract each year's cross section mean. After centralizing, each year's climate becomes more comparable across time. This is essential as we use historical data to predict future.
 
+<figure style="text-align: center;">
 <img src="https://drive.google.com/thumbnail?id=1nguC0F4wP0LWUqfyd1fwYcUi9sdkgxeQ&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
+<figcaption> Performance after detrending climate variables</figcaption>
+</figure>
 
-Performance after detrending climate variables
 
 | year | accuracy | recall | precision | F1     |
 | :--- | :------- | :----- | :-------- | :----- |
@@ -162,9 +165,9 @@ Performance after detrending climate variables
 | 2019 | 0.8560   | 0.3103 | 0.5696    | 0.4018 |
 | 2020 | 0.8697   | 0.2121 | 0.8146    | 0.3365 |
 
-2. <span style='color:#00CC66'>**Improve threoshold of prediction** `water_receive = 0`</span>
+2. <span style='color:#00CC66'>**Improve threshold of prediction** `water_receive = 0`</span>
 
-The threshold value (0.72) is chosen to maximize F1 score, i.e., when the predited probability of class 0 is larger than 0.72, we classify as 0. This makes the model more conservative in predicting 0 compared to the neural threshold 0.5.
+The threshold value (0.72) is chosen to maximize F1 score, i.e., when the predicted probability of class 0 is larger than 0.72, we classify as 0. This makes the model more conservative in predicting 0 compared to the neural threshold 0.5.
 
 <figure style="text-align: center;">
 <img src="https://drive.google.com/thumbnail?id=1Ovi2llAEqhixkvjwU7T9xgJV2ex6Bjue&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
