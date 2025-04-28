@@ -116,9 +116,9 @@ groups[[1]]$Water_receive %>% table() %>% prop.table()
 center_col <- function(data, cols){
     ## Mean center columns in a table
     # @data: table or data frame
-    # @col: selected columns to center
+    # @col: a vector of selected columns to center
     # @return A data frame with the selected columns mean-centered 
-    # (i.e., each value minus its column mean).
+    #   (i.e., each value minus its column mean).
     
     data %>% 
         mutate_at(cols, ~.-mean(., na.rm=TRUE))
@@ -132,6 +132,7 @@ f_name <- sprintf("data/center_at_mean/%s_line.csv", area)
 write_csv(data_center, f_name)
 
 i <- 1
+# box plot of climate variables by year
 for (i in seq_along(climate_vec)){
     cli <- climate_vec[i]
     print (cli)

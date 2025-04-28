@@ -14,8 +14,11 @@
   - Night light does not affect the performance significantly.
   
 - [ ] Use historically trained model (before operation) to predict future (after operation)
-  - [ ] 0-1 prediction: 3-year average, massive vote.
-  - [ ] Maybe by year, so we can see whether there is a trend of increasing deviation.
+  - [ ] Visualize prediction after operation and see if there is a changing pattern from 0 to 1 or from 1 to 0;
+  - [ ] 0-1 prediction: 
+    - [ ] 3-year average climate; which lower the influence of climate internal volatility;
+    - [ ] massive vote; predict 1 if there exists 1: Predictions turn out to be too concervative.
+  - [ ] Add predictors, such as volatility
 
 
 
@@ -25,7 +28,7 @@ ___
 
 2025-04-24
 
-Notes about night light: Performance maintains afteral the removing NL. See [Performance_no_NightLight.xlsx](https://github.com/my1396/Water-Transfer/blob/d2967122217802eb69ae7e14d91a39959247efc1/Performance_no_NightLight.xlsx) for detailed performance.
+**Notes about night light**: Performance maintains afteral the removing NL. See [Performance_no_NightLight.xlsx](https://github.com/my1396/Water-Transfer/blob/d2967122217802eb69ae7e14d91a39959247efc1/Performance_no_NightLight.xlsx) for detailed performance.
 
 **The main update** is dividing data into periods before and after the water transfer operation. Using data before as trainning data, and predicting water receive for data after.
 
@@ -43,11 +46,64 @@ The performance I achieve is as follows:
 | 2019 | 0.7846   | 0.6155 | 0.3814    | 0.4710 |
 | 2020 | 0.8249   | 0.5707 | 0.4510    | 0.5038 |
 
-Side notes about performance drop: The high performance before was based on randomly selected training and testing across time. I tried using time to divide training and testing samples, the model performance drops too.
+Side notes about performance drop: The high performance before was based on randomly draws of training and testing samples across time. 
 
+I tried using time to divide training and testing samples (moving windows training and testing), the model performance drops too.
+
+Training 2010–2012; testing 2013; threshold 0.72;
+
+ ```
+ [[1]]
+           observation
+ prediction    0    1
+          0 2615  141
+          1  528  439
  
+ [[2]]
+  accuracy    recall precision        F1 
+ 0.8203062 0.7568966 0.4539814 0.5675501 
+ 
+ # same period 2010–2013, random draw of training (70%) and testing (30%)
+ # threshold 0.72
+ [[1]]
+           observation
+ prediction    0    1
+          0 3313   26
+          1  506  686
+ 
+ [[2]]
+  accuracy    recall precision        F1 
+ 0.8825866 0.9634831 0.5755034 0.7205882 
+ 
+ # threshold 0.5, for reference
+ [[1]]
+           observation
+ prediction    0    1
+          0 3615  121
+          1  204  591
+ 
+ [[2]]
+  accuracy    recall precision        F1 
+ 0.9282719 0.8300562 0.7433962 0.7843397 
+ ```
 
-**Data Quality Issue for the central line**: I notice some locations have inconsistent water_receive in 2010. For instance, water receive is 0 in 2010, but 1 in 2011-2020. I noticed this for 452 locations. This would lead to poor performance of the model. Need to be corrected.
+Training 2010–2011; testing 2012; threshold 0.72;
+
+```
+[[1]]
+          observation
+prediction    0    1
+         0 2619  119
+         1  524  461
+
+[[2]]
+ accuracy    recall precision        F1 
+0.8272898 0.7948276 0.4680203 0.5891374 
+```
+
+
+
+**Data Quality Issue for the central line**: I notice some locations have inconsistent water_receive in 2010. For instance, water receive is 0 in 2010, but 1 in 2011–2020. I noticed this for 452 locations. This would lead to poor performance of the model. Need to be corrected.
 
 
 
@@ -84,11 +140,13 @@ ___
 
 1. <span style='color:#00CC66'>**Detrend climate variables**</span>
 
+<figure style="text-align: center;">
 <img src="https://drive.google.com/thumbnail?id=1P3IM12VRrIwLHRvuPv1KJSD7e1z3ioOY&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
+<figcaption> Climate variables before detrending.</figcaption>
+</figure>
+The ideal scenario is there are distinct distribution for water receive or not, no overlapping and low volatility. But we see there are overlaps between the lower quartiles and the upper quartiles of the distributions. And the climate variables fluctuates.
 
-The ideal scenario is there are distinct distribution for water receive or not, no overlapping and low volatility. But we see thre are overlaps between the lower quartiles and the upper quartiles of the distributions. And the climate variables fluctuates.
-
-To make the patterns more distinguishable, I detrend the climate variables. Subtract each year's cross section mean. After centralizing, each year's climate becomes more comprable across time. This is essential as we use historical data to predict future.
+To make the patterns more distinguishable, I detrended the climate variables. Subtract each year's cross section mean. After centralizing, each year's climate becomes more comprable across time. This is essential as we use historical data to predict future.
 
 <img src="https://drive.google.com/thumbnail?id=1nguC0F4wP0LWUqfyd1fwYcUi9sdkgxeQ&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
 
@@ -108,7 +166,10 @@ Performance after detrending climate variables
 
 The threshold value (0.72) is chosen to maximize F1 score, i.e., when the predited probability of class 0 is larger than 0.72, we classify as 0. This makes the model more conservative in predicting 0 compared to the neural threshold 0.5.
 
+<figure style="text-align: center;">
 <img src="https://drive.google.com/thumbnail?id=1Ovi2llAEqhixkvjwU7T9xgJV2ex6Bjue&sz=w1000" alt="" style="display: block; margin-right: auto; margin-left: auto; zoom:80%;" />
+<figcaption> Climate variables before detrending.</figcaption>
+</figure>
 
 Performance at threshold being 0.72
 

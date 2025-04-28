@@ -34,14 +34,15 @@ colnames(data)
 
 ## Same period ----
 # random sample to train and test
-data_before <- data %>% filter(year==2013) # eastern
-
-cast <- rbinom(n = 3723, size = 1, prob = c(.50))
+data_before <- data %>% filter(between(year, 2010, 2013)) # eastern
+data_before %>% nrow()
+cast <- rbinom(n = data_before %>% nrow(), size = 1, prob = c(.70))
 cast <- cast %>% as.logical()
-cast
+cast %>% head(15)
 sum(cast)
-data_before <- data %>% filter(year== 2013) %>% subset(cast)
-data_after <- data %>% filter(year==2013) %>% subset(!cast)
+data_after <- data_before %>% subset(!cast)
+data_before <- data_before %>% subset(cast)
+
 
 ## Before/after period ----
 # before operation: train; after: test;
@@ -50,6 +51,9 @@ data_after <- data %>% filter(year>2014)
 
 data_before <- data %>% filter(year<=2013) # eastern
 data_after <- data %>% filter(year>2013)
+
+data_before <- data %>% filter(year<=2013) # eastern
+data_after <- data %>% filter(year==2015)
 
 data_before$year %>% unique()
 data_after$year %>% unique()
@@ -101,7 +105,7 @@ rf.pred.test <- predict(RF_ranger, data=data_after)$predictions
 colnames(rf.pred.test) <- c("class0", "class1")
 print (rf.pred.test %>% head(5))
 
-threshold <- 0.77
+threshold <- 0.72
 # threshold <- 0.5
 rf.class.test <- ifelse(rf.pred.test[,"class0"]>threshold, 0, 1)
 rf.class.test %>% table()
@@ -123,6 +127,9 @@ prediction_after <- data_after[, c("year", "lat", "lon")] %>%
               )
 ## overall performance ----
 with(prediction_after, get_performance(Prediction, Water_receive))
+f_name <- "output/detrend/prediction_after.csv"
+write_csv(prediction_after, f_name)
+prediction_after$year %>% unique()
 # accuracy    recall precision        F1 
 # 0.6916082 0.4625616 0.2428553 0.3184940 
 
